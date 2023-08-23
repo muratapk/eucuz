@@ -1,0 +1,84 @@
+﻿@model IEnumerable<eucuz.Models.Urunler>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.urun_Adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.urun_Kodu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.urun_fiyat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.aciklama)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.indirim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.kategori_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.birim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.olcut)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.urun_Adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.urun_Kodu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.urun_fiyat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.resim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aciklama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.indirim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.kategori_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.birim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.olcut)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.urun_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.urun_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.urun_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

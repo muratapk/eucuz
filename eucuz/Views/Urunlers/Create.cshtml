@@ -1,0 +1,71 @@
+﻿@model eucuz.Models.Urunler
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Urunler</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="urun_Adi" class="control-label"></label>
+                <input asp-for="urun_Adi" class="form-control" />
+                <span asp-validation-for="urun_Adi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="urun_Kodu" class="control-label"></label>
+                <input asp-for="urun_Kodu" class="form-control" />
+                <span asp-validation-for="urun_Kodu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="urun_fiyat" class="control-label"></label>
+                <input asp-for="urun_fiyat" class="form-control" />
+                <span asp-validation-for="urun_fiyat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="resim" class="control-label"></label>
+                <input asp-for="resim" class="form-control" />
+                <span asp-validation-for="resim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aciklama" class="control-label"></label>
+                <input asp-for="aciklama" class="form-control" />
+                <span asp-validation-for="aciklama" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="indirim" class="control-label"></label>
+                <input asp-for="indirim" class="form-control" />
+                <span asp-validation-for="indirim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="kategori_Id" class="control-label"></label>
+                <input asp-for="kategori_Id" class="form-control" />
+                <span asp-validation-for="kategori_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="birim" class="control-label"></label>
+                <input asp-for="birim" class="form-control" />
+                <span asp-validation-for="birim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="olcut" class="control-label"></label>
+                <input asp-for="olcut" class="form-control" />
+                <span asp-validation-for="olcut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
