@@ -1,4 +1,5 @@
-﻿using eucuz.Models;
+﻿using eucuz.Data;
+using eucuz.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,10 +9,14 @@ namespace eucuz.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
+
+        
 
         public IActionResult Index()
         {
@@ -21,6 +26,12 @@ namespace eucuz.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Shop()
+        {
+            var veriler = _context.urunlers.ToList();
+            return View(veriler);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

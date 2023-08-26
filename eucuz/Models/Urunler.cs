@@ -18,9 +18,8 @@ namespace eucuz.Models
         public string birim { get; set; }
         public string olcut { get; set; }
 
-        public ICollection<kategoriler> Kategorilers { get; set; }
-        public sepet Sepet { get; set; }
-        public siparisler Siparisler { get; set; }
+        
+        
 
 
 

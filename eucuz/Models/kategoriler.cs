@@ -8,6 +8,6 @@ namespace eucuz.Models
         public int kategori_Id { get; set; }
         public string kategori_Ad {get; set; }
 
-        public Urunler Urunler { get; set; }
+        public ICollection<Urunler> urunlers { get; set; }
     }
 }

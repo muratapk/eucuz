@@ -4,7 +4,7 @@
 
 namespace eucuz.Migrations
 {
-    public partial class paket : Migration
+    public partial class puketmon : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,31 +23,16 @@ namespace eucuz.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sepet",
+                name: "kategorilers",
                 columns: table => new
                 {
-                    sepet_Id = table.Column<int>(type: "int", nullable: false)
+                    kategori_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    urun_Id = table.Column<int>(type: "int", nullable: false),
-                    adet = table.Column<int>(type: "int", nullable: false)
+                    kategori_Ad = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_sepet", x => x.sepet_Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "siparislers",
-                columns: table => new
-                {
-                    siparis_Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    urun_Id = table.Column<int>(type: "int", nullable: false),
-                    adet = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_siparislers", x => x.siparis_Id);
+                    table.PrimaryKey("PK_kategorilers", x => x.kategori_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,60 +50,73 @@ namespace eucuz.Migrations
                     kategori_Id = table.Column<int>(type: "int", nullable: false),
                     birim = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     olcut = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sepet_Id = table.Column<int>(type: "int", nullable: false),
-                    Siparislersiparis_Id = table.Column<int>(type: "int", nullable: false)
+                    kategorilerkategori_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_urunlers", x => x.urun_Id);
                     table.ForeignKey(
-                        name: "FK_urunlers_sepet_sepet_Id",
-                        column: x => x.sepet_Id,
-                        principalTable: "sepet",
-                        principalColumn: "sepet_Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_urunlers_kategorilers_kategorilerkategori_Id",
+                        column: x => x.kategorilerkategori_Id,
+                        principalTable: "kategorilers",
+                        principalColumn: "kategori_Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sepet",
+                columns: table => new
+                {
+                    sepet_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    urun_Id = table.Column<int>(type: "int", nullable: false),
+                    urunlersurun_Id = table.Column<int>(type: "int", nullable: false),
+                    adet = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_sepet", x => x.sepet_Id);
                     table.ForeignKey(
-                        name: "FK_urunlers_siparislers_Siparislersiparis_Id",
-                        column: x => x.Siparislersiparis_Id,
-                        principalTable: "siparislers",
-                        principalColumn: "siparis_Id",
+                        name: "FK_sepet_urunlers_urunlersurun_Id",
+                        column: x => x.urunlersurun_Id,
+                        principalTable: "urunlers",
+                        principalColumn: "urun_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "kategorilers",
+                name: "siparislers",
                 columns: table => new
                 {
-                    kategori_Id = table.Column<int>(type: "int", nullable: false)
+                    siparis_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    kategori_Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Urunlerurun_Id = table.Column<int>(type: "int", nullable: false)
+                    urun_Id = table.Column<int>(type: "int", nullable: false),
+                    adet = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_kategorilers", x => x.kategori_Id);
+                    table.PrimaryKey("PK_siparislers", x => x.siparis_Id);
                     table.ForeignKey(
-                        name: "FK_kategorilers_urunlers_Urunlerurun_Id",
-                        column: x => x.Urunlerurun_Id,
+                        name: "FK_siparislers_urunlers_urun_Id",
+                        column: x => x.urun_Id,
                         principalTable: "urunlers",
                         principalColumn: "urun_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_kategorilers_Urunlerurun_Id",
-                table: "kategorilers",
-                column: "Urunlerurun_Id");
+                name: "IX_sepet_urunlersurun_Id",
+                table: "sepet",
+                column: "urunlersurun_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_urunlers_sepet_Id",
-                table: "urunlers",
-                column: "sepet_Id");
+                name: "IX_siparislers_urun_Id",
+                table: "siparislers",
+                column: "urun_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_urunlers_Siparislersiparis_Id",
+                name: "IX_urunlers_kategorilerkategori_Id",
                 table: "urunlers",
-                column: "Siparislersiparis_Id");
+                column: "kategorilerkategori_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -127,16 +125,16 @@ namespace eucuz.Migrations
                 name: "admins");
 
             migrationBuilder.DropTable(
-                name: "kategorilers");
+                name: "sepet");
+
+            migrationBuilder.DropTable(
+                name: "siparislers");
 
             migrationBuilder.DropTable(
                 name: "urunlers");
 
             migrationBuilder.DropTable(
-                name: "sepet");
-
-            migrationBuilder.DropTable(
-                name: "siparislers");
+                name: "kategorilers");
         }
     }
 }

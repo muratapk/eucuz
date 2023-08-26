@@ -9,7 +9,8 @@ namespace eucuz.Models
         public  int siparis_Id { get; set; }
         [ForeignKey("Urunler")]
         public int urun_Id { get; set; }
+        public Urunler Urunler { get; set; }
         public int adet { get; set; }
-        public ICollection<Urunler> urunlers { get; set; }
+       
     }
 }
