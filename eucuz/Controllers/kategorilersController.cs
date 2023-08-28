@@ -56,7 +56,7 @@ namespace eucuz.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("kategori_Id,kategori_Ad")] kategoriler kategoriler)
+        public async Task<IActionResult> Create([Bind("kategori_Ad")] kategoriler kategoriler)
         {
             if (ModelState.IsValid)
             {

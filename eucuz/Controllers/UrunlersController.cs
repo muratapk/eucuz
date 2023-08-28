@@ -48,6 +48,10 @@ namespace eucuz.Controllers
         // GET: Urunlers/Create
         public IActionResult Create()
         {
+            List<kategoriler> kateliste = new List<kategoriler>();
+            kateliste = _context.kategorilers.ToList();
+            kateliste.Insert(0, new kategoriler{ kategori_Id=0,kategori_Ad="--Lütfen Seçim Yapınız"});
+            ViewBag.katelist = kateliste;
             return View();
         }
 
