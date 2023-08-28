@@ -33,7 +33,13 @@ namespace eucuz.Controllers
             var veriler = _context.urunlers.ToList();
             return View(veriler);
         }
+        [HttpGet]
+        public IActionResult Detay(int? Id)
+        {
+            var secim = _context.urunlers.Where(x => x.urun_Id == Id).FirstOrDefault();
 
+            return View(secim);
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
