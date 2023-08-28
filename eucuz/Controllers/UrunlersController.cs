@@ -22,9 +22,8 @@ namespace eucuz.Controllers
         // GET: Urunlers
         public async Task<IActionResult> Index()
         {
-              return _context.urunlers != null ? 
-                          View(await _context.urunlers.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.urunlers'  is null.");
+            var applicationDbContext = _context.urunlers.Include(u => u.kategoriler);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Urunlers/Details/5
@@ -36,6 +35,7 @@ namespace eucuz.Controllers
             }
 
             var urunler = await _context.urunlers
+                .Include(u => u.kategoriler)
                 .FirstOrDefaultAsync(m => m.urun_Id == id);
             if (urunler == null)
             {
@@ -48,10 +48,10 @@ namespace eucuz.Controllers
         // GET: Urunlers/Create
         public IActionResult Create()
         {
-            List<kategoriler> kateliste = new List<kategoriler>();
-            kateliste = _context.kategorilers.ToList();
-            kateliste.Insert(0, new kategoriler{ kategori_Id=0,kategori_Ad="--Lütfen Seçim Yapınız"});
-            ViewBag.katelist = kateliste;
+            List<kategoriler>listem=new List<kategoriler>();
+            listem = _context.kategorilers.ToList();
+            listem.Insert(0, new kategoriler { kategori_Id=0,kategori_Ad="Seçim Yapınız"});
+            ViewBag.katelist=listem;
             return View();
         }
 
@@ -68,6 +68,7 @@ namespace eucuz.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+           
             return View(urunler);
         }
 
@@ -78,12 +79,16 @@ namespace eucuz.Controllers
             {
                 return NotFound();
             }
-
+            List<kategoriler> listem = new List<kategoriler>();
+            listem = _context.kategorilers.ToList();
+            listem.Insert(0, new kategoriler{ kategori_Id = 0, kategori_Ad = "Seçim Yapınız" });
+            ViewBag.katelist = listem;
             var urunler = await _context.urunlers.FindAsync(id);
             if (urunler == null)
             {
                 return NotFound();
             }
+          
             return View(urunler);
         }
 
@@ -119,6 +124,7 @@ namespace eucuz.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+           
             return View(urunler);
         }
 
@@ -131,6 +137,7 @@ namespace eucuz.Controllers
             }
 
             var urunler = await _context.urunlers
+                .Include(u => u.kategoriler)
                 .FirstOrDefaultAsync(m => m.urun_Id == id);
             if (urunler == null)
             {
