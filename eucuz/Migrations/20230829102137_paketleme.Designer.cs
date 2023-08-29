@@ -11,8 +11,8 @@ using eucuz.Data;
 namespace eucuz.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230828224912_sonsuzluk")]
-    partial class sonsuzluk
+    [Migration("20230829102137_paketleme")]
+    partial class paketleme
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,12 +177,17 @@ namespace eucuz.Migrations
             modelBuilder.Entity("eucuz.Models.Urunler", b =>
                 {
                     b.HasOne("eucuz.Models.kategoriler", "kategoriler")
-                        .WithMany()
+                        .WithMany("Urunsler")
                         .HasForeignKey("kategori_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("kategoriler");
+                });
+
+            modelBuilder.Entity("eucuz.Models.kategoriler", b =>
+                {
+                    b.Navigation("Urunsler");
                 });
 #pragma warning restore 612, 618
         }

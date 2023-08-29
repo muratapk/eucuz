@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="urun_Adi" class="control-label"></label>
@@ -29,9 +29,9 @@
                 <span asp-validation-for="urun_fiyat" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="resim" class="control-label"></label>
-                <input asp-for="resim" class="form-control" />
-                <span asp-validation-for="resim" class="text-danger"></span>
+                <label asp-for="resimyukle" class="control-label"></label>
+                <input asp-for="resimyukle" class="form-control" type="file" />
+                <span asp-validation-for="resimyukle" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="aciklama" class="control-label"></label>
@@ -45,8 +45,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="kategori_Id" class="control-label"></label>
-                <select asp-for="kategori_Id" class ="form-control" asp-items="@(new SelectList(@ViewBag.katelist,"kategori_Id","kategori_Ad"))"></select>
-                <span asp-validation-for="kategori_Id" class="text-danger"></span>
+                <select asp-for="kategori_Id" class="form-control" asp-items="@ViewBag.katelist">
+                    <option value="">Seçim Yapınız</option>
+                </select>
+              
             </div>
             <div class="form-group">
                 <label asp-for="birim" class="control-label"></label>

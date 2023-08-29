@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using eucuz.Data;
 using eucuz.Models;
+using NuGet.Protocol;
+using static NuGet.Packaging.PackagingConstants;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace eucuz.Controllers
 {
     public class UrunlersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public UrunlersController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public UrunlersController(ApplicationDbContext context,IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Urunlers
@@ -48,11 +52,9 @@ namespace eucuz.Controllers
         // GET: Urunlers/Create
         public IActionResult Create()
         {
-            List<kategoriler>listem=new List<kategoriler>();
-            listem = _context.kategorilers.ToList();
-            listem.Insert(0, new kategoriler { kategori_Id=0,kategori_Ad="Seçim Yapınız"});
-            ViewBag.katelist=listem;
-            return View();
+
+            ViewBag.katelist = new SelectList(_context.kategorilers, "kategori_Id", "kategori_Ad");
+            return View();  
         }
 
         // POST: Urunlers/Create
@@ -60,16 +62,36 @@ namespace eucuz.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("urun_Id,urun_Adi,urun_Kodu,urun_fiyat,resim,aciklama,indirim,kategori_Id,birim,olcut")] Urunler urunler)
+        public async Task<IActionResult> Create(Urunler urunler, IFormFile resimyukle)
         {
-            if (ModelState.IsValid)
+
+            //if (urunler.resimyukle != null)
+            //{
+            //    string folder = "~/resimler";
+            //    string isim = Guid.NewGuid().ToString() + urunler.resimyukle.FileName;
+            //    folder += isim;
+            //    string serverfolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+            //    await urunler.resimyukle.CopyToAsync(new FileStream(serverfolder, FileMode.Create));
+            //    urunler.resim = isim;
+            //}
+
+            string extension = Path.GetExtension(resimyukle.FileName);
+            //burada dosyanı uzantısı aldık
+            var randomName = Guid.NewGuid().ToString() + extension;
+            var yol = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/resimler", randomName);
+            using (var stream = new FileStream(yol, FileMode.Create))
             {
+                await resimyukle.CopyToAsync(stream);
+            }
+            urunler.resim= randomName;
+
+           
+               
+
                 _context.Add(urunler);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-           
-            return View(urunler);
+        
         }
 
         // GET: Urunlers/Edit/5

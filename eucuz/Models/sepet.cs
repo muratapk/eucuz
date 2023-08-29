@@ -10,7 +10,7 @@ namespace eucuz.Models
        
         [ForeignKey("Urunler")]
         public int urun_Id { get; set; }
-        public Urunler urunlers { get; set; }
+        public virtual Urunler urunlers { get; set; }
 
         public int adet { get; set; }
        

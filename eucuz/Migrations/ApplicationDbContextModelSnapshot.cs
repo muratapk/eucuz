@@ -175,12 +175,17 @@ namespace eucuz.Migrations
             modelBuilder.Entity("eucuz.Models.Urunler", b =>
                 {
                     b.HasOne("eucuz.Models.kategoriler", "kategoriler")
-                        .WithMany()
+                        .WithMany("Urunsler")
                         .HasForeignKey("kategori_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("kategoriler");
+                });
+
+            modelBuilder.Entity("eucuz.Models.kategoriler", b =>
+                {
+                    b.Navigation("Urunsler");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,9 +15,13 @@ namespace eucuz.Models
         public int indirim { get; set; }
         [ForeignKey("kategoriler")]
         public int kategori_Id { get; set; }
-        public kategoriler? kategoriler { get; set; }    
+        public virtual kategoriler kategoriler { get; set; }    
         public string birim { get; set; }
         public string olcut { get; set; }
+        [NotMapped]
+        [Display(Name ="Resim Seçiniz")]
+        
+        public IFormFile resimyukle { get; set; }
         
 
         
